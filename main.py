@@ -1,5 +1,4 @@
-from src.data.data_loader import load_dataset
-from src.data.data_validation import validate_dataset
+from src.data.dataset import prepare_dataset
 
 REQUIRED_COLUMNS = [
     "customerID",
@@ -27,9 +26,9 @@ REQUIRED_COLUMNS = [
 
 
 def main() -> None:
-    df = load_dataset("WA_Fn-UseC_-Telco-Customer-Churn.csv")
-
-    validate_dataset(df, required_columns=REQUIRED_COLUMNS)
+    df = prepare_dataset(
+        "WA_Fn-UseC_-Telco-Customer-Churn.csv", required_columns=REQUIRED_COLUMNS
+    )
 
     print(df.head())
 
