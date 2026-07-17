@@ -1,6 +1,7 @@
 import pandas as pd
 from src.data.data_loader import load_dataset
 from src.data.data_validation import validate_dataset
+from src.preprocessing.cleaning import clean_dataset
 
 
 def prepare_dataset(filename: str, required_columns: list[str]) -> pd.DataFrame:
@@ -25,5 +26,7 @@ def prepare_dataset(filename: str, required_columns: list[str]) -> pd.DataFrame:
     df = load_dataset(filename)
 
     validate_dataset(df, required_columns)
+    
+    df = clean_dataset(df)
 
     return df
