@@ -60,7 +60,7 @@ def convert_column_type(
         )
 
     elif dtype == "category":
-        converted_df[column] = converted_df[column].astype("string").astype("category")
+        converted_df[column] = converted_df[column].astype("string")
 
     elif dtype == "bool":
         if true_values is None or false_values is None:
