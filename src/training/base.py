@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-
+from sklearn.base import BaseEstimator
 import pandas as pd
 
 
@@ -15,7 +15,7 @@ class TrainingStrategy(ABC):
         self,
         X: pd.DataFrame,
         y: pd.Series,
-    ) -> None:
+    ) -> BaseEstimator:
         """Train the underlying model.
 
         Args:
