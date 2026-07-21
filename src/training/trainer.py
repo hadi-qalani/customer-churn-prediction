@@ -1,6 +1,6 @@
 from time import perf_counter
 
-from src.split.splitter import DatasetSplit
+from src.ml_preprocessing.preprocessor import ProcessedDataset
 from src.training.base import TrainingStrategy
 from src.training.result import TrainingResult
 
@@ -16,7 +16,7 @@ class Trainer:
         """
         self.strategy = strategy
 
-    def train(self, data: DatasetSplit) -> TrainingResult:
+    def train(self, data: ProcessedDataset) -> TrainingResult:
         """Train a model and return the training result.
 
         Measures the training duration and returns the trained model

@@ -1,6 +1,11 @@
 from abc import ABC, abstractmethod
-from sklearn.base import BaseEstimator
+
+import numpy as np
 import pandas as pd
+from scipy.sparse import spmatrix
+from sklearn.base import BaseEstimator
+
+ArrayLike = np.ndarray | spmatrix
 
 
 class TrainingStrategy(ABC):
@@ -13,7 +18,7 @@ class TrainingStrategy(ABC):
     @abstractmethod
     def fit(
         self,
-        X: pd.DataFrame,
+        X: ArrayLike,
         y: pd.Series,
     ) -> BaseEstimator:
         """Train the underlying model.
