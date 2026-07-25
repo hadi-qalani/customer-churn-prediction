@@ -9,7 +9,6 @@ CONFIG_FILES = {
     "required_columns": "columns.yaml",
     "preprocessing": "preprocessing.yaml",
     "model": "model.yaml",
-    "evaluation": "evaluation.yaml",
     "schema": "schema.yaml",
 }
 

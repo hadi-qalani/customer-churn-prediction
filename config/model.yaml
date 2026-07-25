@@ -1,0 +1,6 @@
+
+name: LogisticRegression
+
+params:
+  class_weight: balanced
+  random_state: 42
