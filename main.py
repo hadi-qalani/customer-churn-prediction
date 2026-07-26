@@ -17,8 +17,8 @@ def main() -> None:
     configs = load_configs()
 
     df = prepare_dataset(
-        "WA_Fn-UseC_-Telco-Customer-Churn.csv",
-        required_columns=configs["required_columns"]["columns"],
+        configs["dataset"]["name"],
+        required_columns=configs["dataset"]["required_columns"],
         schema=configs["schema"],
     )
 
@@ -26,7 +26,7 @@ def main() -> None:
     feature_eng = FeatureEngineeringPipeline(engineers=[samp])
     df = feature_eng.transform(df)
 
-    splitted = split_dataset(df, "Churn")
+    splitted = split_dataset(df, configs["dataset"]["target"])
     processed_data = preprocess_dataset(
         dataset=splitted, config=configs["preprocessing"]
     )

@@ -6,10 +6,10 @@ CONFIG_DIR = Path(__file__).resolve().parents[2] / "config"
 
 
 CONFIG_FILES = {
-    "required_columns": "columns.yaml",
     "preprocessing": "preprocessing.yaml",
     "model": "model.yaml",
     "schema": "schema.yaml",
+    "dataset": "dataset.yaml",
 }
 
 
