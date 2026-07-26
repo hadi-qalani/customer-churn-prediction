@@ -1,8 +1,7 @@
-from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
-
 from src.config.config_loader import load_configs
 from src.data.dataset import prepare_dataset
 from src.evaluation.evaluator import Evaluator
+from src.evaluation.metrics import load_metrics
 from src.evaluation.sklearn import SklearnEvaluationStrategy
 from src.features.engineering import IdentityFeatureEngineer
 from src.features.pipeline import FeatureEngineeringPipeline
@@ -36,9 +35,9 @@ def main() -> None:
     trainer = Trainer(train_strategy)
     train_result = trainer.train(data=processed_data)
 
-    eval_strategy = SklearnEvaluationStrategy(
-        [recall_score, precision_score, accuracy_score, f1_score]
-    )
+    metrics = load_metrics(configs["evaluation"]["metrics"])
+
+    eval_strategy = SklearnEvaluationStrategy(metrics)
     evaluator = Evaluator(strategy=eval_strategy)
     eval_result = evaluator.evaluate(model=model, processed_data=processed_data)
 

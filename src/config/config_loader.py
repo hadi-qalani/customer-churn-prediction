@@ -10,6 +10,7 @@ CONFIG_FILES = {
     "model": "model.yaml",
     "schema": "schema.yaml",
     "dataset": "dataset.yaml",
+    "evaluation": "evaluation.yaml",
 }
 
 
