@@ -1,0 +1,26 @@
+numeric_features:
+  transformer: numeric
+  columns:
+    - tenure
+    - MonthlyCharges
+    - TotalCharges
+
+categorical_features:
+  transformer: categorical
+  columns:
+    - gender
+    - SeniorCitizen
+    - Partner
+    - Dependents
+    - PhoneService
+    - MultipleLines
+    - InternetService
+    - OnlineSecurity
+    - OnlineBackup
+    - DeviceProtection
+    - TechSupport
+    - StreamingTV
+    - StreamingMovies
+    - Contract
+    - PaperlessBilling
+    - PaymentMethod

@@ -2,7 +2,6 @@
 
 import pandas as pd
 
-from src.config.config_loader import load_schema
 from src.preprocessing.type_conversion import convert_column_type
 
 
@@ -26,7 +25,7 @@ def convert_dataset_types(
     return converted_df
 
 
-def clean_dataset(df: pd.DataFrame, schema: dict ) -> pd.DataFrame:
+def clean_dataset(df: pd.DataFrame, schema: dict) -> pd.DataFrame:
 
     # schema = load_schema()
 
@@ -40,4 +39,3 @@ def clean_dataset(df: pd.DataFrame, schema: dict ) -> pd.DataFrame:
     # df = handle_outliers(df, schema)
 
     return cleaned_df
-

@@ -1,11 +1,13 @@
 import pandas as pd
+
 from src.data.data_loader import load_dataset
 from src.data.data_validation import validate_dataset
 from src.preprocessing.cleaning import clean_dataset
-from src.config.config_loader import load_schema
 
 
-def prepare_dataset(filename: str, required_columns: list[str]) -> pd.DataFrame:
+def prepare_dataset(
+    filename: str, required_columns: list[str], schema: dict
+) -> pd.DataFrame:
     """
     Load and validate a dataset.
 
@@ -16,6 +18,7 @@ def prepare_dataset(filename: str, required_columns: list[str]) -> pd.DataFrame:
         filename (str): Name of the dataset file to load.
         required_columns (list[str]): List of required column names that
             must exist in the dataset.
+        schema: a dictionary that indicates the type and values of each column
 
     Returns:
         pd.DataFrame: The loaded and validated dataset.
@@ -27,7 +30,6 @@ def prepare_dataset(filename: str, required_columns: list[str]) -> pd.DataFrame:
     df = load_dataset(filename)
 
     validate_dataset(df, required_columns)
-    schema = load_schema()
     df = clean_dataset(df, schema)
 
     return df
