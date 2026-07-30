@@ -5,6 +5,8 @@ from src.evaluation.metrics import load_metrics
 from src.evaluation.sklearn import SklearnEvaluationStrategy
 from src.features.engineering import IdentityFeatureEngineer
 from src.features.pipeline import FeatureEngineeringPipeline
+from src.logging.config import configure_logging
+from src.logging.logger import get_logger
 from src.ml_preprocessing.preprocessor import preprocess_dataset
 from src.model.factory import create_model
 from src.split.splitter import split_dataset
@@ -14,6 +16,11 @@ from src.training.trainer import Trainer
 
 def main() -> None:
     configs = load_configs()
+
+    configure_logging(level=configs["logging"]["level"])
+    logger = get_logger(__name__)
+
+    logger.info("main started")
 
     df = prepare_dataset(
         configs["dataset"]["name"],
@@ -44,6 +51,7 @@ def main() -> None:
     print(df.head())
     print(train_result)
     print(eval_result)
+    logger.info("main ended")
 
 
 if __name__ == "__main__":
