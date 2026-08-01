@@ -19,7 +19,7 @@ class JoblibPersistence(PersistenceStrategy):
         None.
     """
 
-    def save(self, model: BaseEstimator, path: Path) -> None:
+    def save(self, artifact: BaseEstimator, path: Path) -> None:
         """Save a trained model to disk using Joblib.
 
         Creates the parent directory structure if it does not already exist.
@@ -33,7 +33,7 @@ class JoblibPersistence(PersistenceStrategy):
         """
         path.parent.mkdir(exist_ok=True, parents=True)
 
-        joblib.dump(model, path)
+        joblib.dump(artifact, path)
 
     def load(self, path: Path) -> BaseEstimator:
         """Load a trained model from disk using Joblib.

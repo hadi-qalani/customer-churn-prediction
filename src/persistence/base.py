@@ -15,7 +15,7 @@ class PersistenceStrategy(ABC):
     """
 
     @abstractmethod
-    def save(self, model: BaseEstimator, path: Path) -> None:
+    def save(self, artifact: BaseEstimator, path: Path) -> None:
         """Save a trained model to persistent storage.
 
         Args:

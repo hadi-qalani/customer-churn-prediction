@@ -24,14 +24,14 @@ class PersistenceManager:
         """
         self.strategy = strategy
 
-    def save(self, model: BaseEstimator, path: Path) -> None:
+    def save(self, artifact: BaseEstimator, path: Path) -> None:
         """Save a model using the configured persistence strategy.
 
         Args:
             model: Trained machine learning model to be saved.
             path: Destination path where the model will be stored.
         """
-        self.strategy.save(model, path)
+        self.strategy.save(artifact, path)
 
     def load(self, path: Path) -> BaseEstimator:
         """Load a model using the configured persistence strategy.
