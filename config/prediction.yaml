@@ -1,0 +1,4 @@
+
+input_path: data/inference/input/input.csv
+pipeline_path: artifacts/models/churn_pipeline.joblib
+output_path: data/inference/output/predictions.csv

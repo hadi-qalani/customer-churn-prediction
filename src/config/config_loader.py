@@ -12,6 +12,7 @@ CONFIG_FILES = {
     "dataset": "dataset.yaml",
     "evaluation": "evaluation.yaml",
     "logging": "logging.yaml",
+    "prediction": "prediction.yaml"
 }
 
 
