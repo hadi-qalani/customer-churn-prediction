@@ -33,7 +33,7 @@ class JoblibPersistence(PersistenceStrategy):
         """
         path.parent.mkdir(exist_ok=True, parents=True)
 
-        joblib.dump(artifact, path)
+        joblib.dump(artifact, f"{path}.joblib")
 
     def load(self, path: Path) -> BaseEstimator:
         """Load a trained model from disk using Joblib.
