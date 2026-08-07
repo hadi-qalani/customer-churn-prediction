@@ -2,14 +2,19 @@ import joblib
 import pandas as pd
 
 from src.config.config_loader import load_configs
-from src.features.engineering import IdentityFeatureEngineer
-from src.features.pipeline import FeatureEngineeringPipeline
+from src.data.dataset import prepare_dataset
 from src.logging.config import configure_logging
 from src.logging.logger import get_logger
+from src.tracking.metadata import save_metadata
+from src.tracking.versioning import create_version_dir
 
 
 def predict() -> None:
     """Run the complete machine learning training pipeline."""
+
+    version_dir = create_version_dir("data/inference/output")
+    result_path = version_dir / "output.csv"
+    metadata_path = version_dir / "metadata.json"
 
     configs = load_configs()
 
@@ -18,19 +23,29 @@ def predict() -> None:
 
     logger.info("prediction started")
 
-    df = pd.read_csv(configs["prediction"]["input_path"])
-
-    feature_pipeline = FeatureEngineeringPipeline(engineers=[IdentityFeatureEngineer()])
-
-    df = feature_pipeline.transform(df)
+    df = prepare_dataset(
+        configs["prediction"]["input_path"],
+        required_columns=configs["prediction"]["required_columns"],
+        schema=configs["prediction"]["schema"],
+    )
 
     pipeline = joblib.load(configs["prediction"]["pipeline_path"])
-
     result = pipeline.predict(df)
-    logger.info(result)
-    result = pd.DataFrame(result, columns=["result"])
 
-    result.to_csv(configs["prediction"]["output_path"], index=False)
+    logger.info("prediction completed: %s", result)
+
+    result = pd.DataFrame(result, columns=["result"])
+    result.to_csv(result_path, index=True)
+
+    model = pipeline.named_steps["model"]
+
+    metadata = {
+        "artifact_type": "prediction",
+        "model_name": type(model).__name__,
+        "version": f"{version_dir}",
+        "dataset": configs["prediction"]["input_path"],
+    }
+    save_metadata(metadata, metadata_path)
 
     logger.info("prediction finished")
 
