@@ -34,7 +34,7 @@ def train() -> None:
     logger.info("training started")
 
     df = prepare_dataset(
-        configs["dataset"]["name"],
+        configs["dataset"]["path"],
         required_columns=configs["dataset"]["required_columns"],
         schema=configs["schema"],
     )

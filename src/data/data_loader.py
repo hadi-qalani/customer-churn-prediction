@@ -1,47 +1,29 @@
 from pathlib import Path
+
 import pandas as pd
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-DATA_DIR = BASE_DIR / "data" / "raw"
+def load_dataset(file_path: str) -> pd.DataFrame:
+    """Load a CSV dataset from the given file path.
 
+    Args:
+        file_path (str): Path to the CSV dataset file.
 
-def load_dataset(filename: str) -> pd.DataFrame:
-    """
-    Load a CSV dataset from the data directory.
+    Returns:
+        pd.DataFrame: Loaded dataset as a pandas DataFrame.
 
-    Parameters
-    ----------
-    filename : str
-        Name of the CSV file.
-
-    Returns
-    -------
-    pd.DataFrame
-        Loaded dataset.
-
-    Raises
-    ------
-    FileNotFoundError
-        If the dataset does not exist.
-
-    ValueError
-        If the file is not a CSV.
-
-    pd.errors.EmptyDataError
-        If the CSV file is empty.
+    Raises:
+        FileNotFoundError: If the dataset file does not exist.
+        ValueError: If the file format is not CSV.
+        pd.errors.EmptyDataError: If the CSV file is empty.
     """
 
-    file_path = DATA_DIR / filename
+    _file_path = Path(file_path)
 
-    if not file_path.exists():
-        raise FileNotFoundError(
-            f"Dataset not found: {file_path}"
-        )
+    if not _file_path.exists():
+        raise FileNotFoundError(f"Dataset not found: {file_path}")
 
-    if file_path.suffix.lower() != ".csv":
-        raise ValueError(
-            "Only CSV files are supported."
-        )
+    if _file_path.suffix.lower() != ".csv":
+        raise ValueError("Only CSV files are supported.")
 
     return pd.read_csv(file_path)

@@ -1,4 +1,4 @@
-name: WA_Fn-UseC_-Telco-Customer-Churn.csv
+path: data/raw/WA_Fn-UseC_-Telco-Customer-Churn.csv
 required_columns:
   - customerID
   - gender
