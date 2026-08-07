@@ -1,13 +1,21 @@
 import pandas as pd
+from sklearn.base import BaseEstimator, TransformerMixin
 
 from src.features.base import BaseFeatureEngineer
 
 
-class FeatureEngineeringPipeline:
+class FeatureEngineeringPipeline(
+    BaseEstimator,
+    TransformerMixin,
+):
     """Apply a sequence of feature engineering steps to a dataframe.
 
+    This class is compatible with scikit-learn's ``Pipeline`` API, allowing
+    multiple feature engineering steps to be executed as a single transformer
+    before preprocessing and model inference.
+
     Attributes:
-        engineers: Ordered list of feature engineers to apply.
+        engineers: Ordered list of feature engineers applied sequentially.
     """
 
     def __init__(
@@ -21,18 +29,45 @@ class FeatureEngineeringPipeline:
         """
         self.engineers = engineers
 
-    def transform(self, df: pd.DataFrame) -> pd.DataFrame:
+    @property
+    def engineer_names(self):
+        return [type(engineer).__name__ for engineer in self.engineers]
+
+    def fit(
+        self,
+        X: pd.DataFrame,
+        y=None,
+    ):
+        """Fit the feature engineering pipeline.
+
+        This transformer is stateless, so no fitting is required. The method
+        exists only to satisfy the scikit-learn transformer interface.
+
+        Args:
+            X: Input dataframe.
+            y: Optional target values. Ignored.
+
+        Returns:
+            The fitted transformer.
+        """
+        return self
+
+    def transform(
+        self,
+        X: pd.DataFrame,
+    ) -> pd.DataFrame:
         """Apply all feature engineers sequentially.
 
         Args:
-            df: Input dataframe.
+            X: Input dataframe.
 
         Returns:
-            The transformed dataframe after applying all feature engineers.
+            The transformed dataframe after applying all feature engineering
+            steps in order.
         """
-        transformed_df = df.copy()
+        transformed = X.copy()
 
         for engineer in self.engineers:
-            transformed_df = engineer.transform(transformed_df)
+            transformed = engineer.transform(transformed)
 
-        return transformed_df
+        return transformed
